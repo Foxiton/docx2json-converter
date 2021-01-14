@@ -4,6 +4,9 @@ import sys
 import docx2txt
 import docx
 import json as js
+import string
+import random
+letters = string.ascii_lowercase
 # from docx2python import docx2python
 # from docx.enum.style import WD_STYLE_TYPE
 
@@ -113,7 +116,7 @@ def mergeTextbyStyles(ls):
 
 #main converter
 
-def word_to_json_parser(doc_path,store=False,image_folder="images",json="output.json"):
+def word_to_json_parser(doc_path,store=False,image_folder="android",json="output.json"):
     ext=doc_path.split('.')
     if ext[-1].lower() != 'docx':
         print('[*] Warning! Unable to verify input file '+str(doc_path))
@@ -135,6 +138,7 @@ def word_to_json_parser(doc_path,store=False,image_folder="images",json="output.
         data_dict={}
         content=[]
         if val.text.strip()!="":
+            # print(val.style.builtin)
             typ=val.style.name
             data_dict["type"]=typ
 
@@ -171,6 +175,7 @@ def word_to_json_parser(doc_path,store=False,image_folder="images",json="output.
             if image!=[]:
                 data_dict["type"]='Image'
                 data_dict["content"]=image[0]
+                # print(image_files)
                 if image[0] not in image_files:
                     print('[*] Warning! '+image[0]+' not exists in destination folder')
                 data_list.append(data_dict)
@@ -205,12 +210,29 @@ def word_to_json_parser(doc_path,store=False,image_folder="images",json="output.
 #-------------------------------------------
 #          Usage
 #------------------------------------------- 
-#   ./convert.py -d /path/to/file.docx -o /path/to/outFile.json -i /path/to/store/images/ 
+#   ./convert.py -/path/to/file.docx -o /path/to/outFile.json 
 
-filename= 'resume-dd.docx'
-store=True
-    
-word_to_json_parser(filename,store)
+
+len_arg=len(sys.argv)
+if(len_arg>=2 or len_arg ==3):
+    filename= sys.argv[1]
+    folderName=''.join(random.choice(letters) for i in range(10))
+    outname=''
+    store=False
+    if(len_arg ==3):
+        outname = sys.argv[2]
+        folderName = sys.argv[2].split('.')[0]
+        store=True
+    word_to_json_parser(filename,store,folderName,outname)
+
+else:
+    print('Usage :')
+    print('\t./{} inputFile.docx outputFile.json'.format(sys.argv[0].split('/')[-1]))
+    print('\t\tOR')
+    print('\t./{} inputFile.docx'.format(sys.argv[0].split('/')[-1]))
+
+
+
 
 
 # ----------------------------------------
@@ -232,9 +254,14 @@ word_to_json_parser(filename,store)
 # # f=open('data.xml','w')
 # j=0
 # lst1=[]
+# print(doc.author)
 # for para in doc.paragraphs:
 #     lst=[]
 #     dic={}
+
+#     # print(para.title)
+
+
 #     for i in para.runs:
 
 #         dic['style']=checkFontStyles(i.font)
