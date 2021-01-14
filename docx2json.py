@@ -226,7 +226,7 @@ if(len_arg>=2 or len_arg ==3):
     word_to_json_parser(filename,store,folderName,outname)
 
 else:
-    print('Usage :')
+    print('Usage :\n')
     print('\t./{} inputFile.docx outputFile.json'.format(sys.argv[0].split('/')[-1]))
     print('\t\tOR')
     print('\t./{} inputFile.docx'.format(sys.argv[0].split('/')[-1]))
