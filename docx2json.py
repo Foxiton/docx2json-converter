@@ -7,8 +7,7 @@ import json as js
 import string
 import random
 letters = string.ascii_lowercase
-# from docx2python import docx2python
-# from docx.enum.style import WD_STYLE_TYPE
+
 
 
 
