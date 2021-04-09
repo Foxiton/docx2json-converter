@@ -180,7 +180,8 @@ def word_to_json_parser(doc_path,store=False,image_folder="android",json="output
                 data_list.append(data_dict)
             else:
                 print('[*] Unable to find Images ...')
-    json_data=js.dumps(data_list,  indent=4)
+    #json_data=js.dumps(data_list,  indent=4)
+    json_data=js.dumps(data_list)
     if store:
         f=open(json,'w')
         f.write(json_data)
